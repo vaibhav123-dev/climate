@@ -2,14 +2,14 @@ import { Coordinates } from "@/api/types";
 import { useEffect, useState } from "react";
 
 interface GeolocationState {
-  coordinate: Coordinates | null;
+  coordinates: Coordinates | null;
   error: string | null;
   isLoading: boolean;
 }
 
 export function useGeolocation() {
   const [locationData, setLocationData] = useState<GeolocationState>({
-    coordinate: null,
+    coordinates: null,
     error: null,
     isLoading: true,
   });
@@ -19,7 +19,7 @@ export function useGeolocation() {
 
     if (!navigator.geolocation) {
       setLocationData({
-        coordinate: null,
+        coordinates: null,
         error: "Geolocation is not supported by the browser",
         isLoading: false,
       });
@@ -29,7 +29,7 @@ export function useGeolocation() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setLocationData({
-          coordinate: {
+          coordinates: {
             lat: position.coords.latitude,
             lon: position.coords.longitude,
           },
@@ -55,7 +55,7 @@ export function useGeolocation() {
         }
 
         setLocationData({
-          coordinate: null,
+          coordinates: null,
           error: errorMessage,
           isLoading: false,
         });

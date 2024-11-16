@@ -1,9 +1,9 @@
 import { API_CONFIG } from "./config";
-import {
-  Coordinates,
+import type {
+  WeatherData,
   ForecastData,
   GeocodingResponse,
-  WeatherData,
+  Coordinates,
 } from "./types";
 
 class WeatherAPI {
@@ -12,7 +12,7 @@ class WeatherAPI {
       appid: API_CONFIG.API_KEY,
       ...params,
     });
-    return `${endpoint}/${searchParams.toString()}`;
+    return `${endpoint}?${searchParams.toString()}`;
   }
 
   private async fetchData<T>(url: string): Promise<T> {
@@ -51,6 +51,14 @@ class WeatherAPI {
       lat: lat.toString(),
       lon: lon.toString(),
       limit: "1",
+    });
+    return this.fetchData<GeocodingResponse[]>(url);
+  }
+
+  async searchLocations(query: string): Promise<GeocodingResponse[]> {
+    const url = this.createUrl(`${API_CONFIG.GEO}/direct`, {
+      q: query,
+      limit: "5",
     });
     return this.fetchData<GeocodingResponse[]>(url);
   }
