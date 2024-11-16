@@ -28,8 +28,8 @@ export function CurrentWeather({ data, locationName }: CurrentWeatherProps) {
                   {locationName?.name}
                 </h2>
                 {locationName?.state && (
-                  <span className="text-muted-foreground">
-                    , {locationName.state}
+                  <span className="text-muted-foreground ml-2">
+                    {locationName.state}
                   </span>
                 )}
               </div>
